@@ -4,16 +4,17 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import com.example.genakuchergin.clarcproto.domain.interfaces.interactors.IMainInteractor
-import com.example.genakuchergin.clarcproto.domain.usecases.MainAndErrorAndProgressUseCase
+import com.example.genakuchergin.clarcproto.domain.interfaces.usecases.IErrorUseCase
+import com.example.genakuchergin.clarcproto.domain.interfaces.usecases.IProgressUseCase
+import com.example.genakuchergin.clarcproto.domain.usecases.CompositeUseCase
 import com.example.genakuchergin.clarcproto.interactors.MainInteractor
 import com.example.genakuchergin.clarcproto.presenters.MainPresenter
 import com.example.genakuchergin.clarcproto.presenters.interfaces.IMainViewModel
-import com.example.genakuchergin.clarcproto.presenters.interfaces.IProgressViewModel
 
-class MainViewModelForCaseWithErrorAndProgress(
+class CompositeViewModel(
         val app: Application,
-        errorViewModel: ErrorViewModel,
-        progressViewModel: IProgressViewModel
+        errorUseCase: IErrorUseCase,
+        progressUseCase: IProgressUseCase
 ) : AndroidViewModel(app), IMainViewModel {
 
     // OBSERVABLES
@@ -24,7 +25,7 @@ class MainViewModelForCaseWithErrorAndProgress(
 
     init {
         val presenter = MainPresenter(this)
-        val useCase = MainAndErrorAndProgressUseCase(presenter, errorViewModel.useCase, progressViewModel.useCase)
+        val useCase = CompositeUseCase(presenter, errorUseCase, progressUseCase)
         interactor = MainInteractor(useCase)
     }
 
