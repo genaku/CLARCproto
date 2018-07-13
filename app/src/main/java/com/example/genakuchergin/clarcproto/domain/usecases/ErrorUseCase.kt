@@ -11,4 +11,5 @@ class ErrorUseCase(private val presenter: IErrorPresenter): IErrorUseCase {
         mCount++
         presenter.showError("$error $mCount")
     }
+
 }

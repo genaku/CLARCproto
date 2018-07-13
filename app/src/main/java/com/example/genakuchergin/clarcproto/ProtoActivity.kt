@@ -43,8 +43,8 @@ class ProtoActivity : CompositeActivity(R.layout.activity_main) {
         mErrorActivityDelegate = ErrorActivityDelegate(application)
         mProgressActivityDelegate = ProgressActivityDelegate(application)
         return DelegatesHolder.Builder()
-                .add(ActivityDelegateType.ERROR_ACTIVITY, mErrorActivityDelegate)
-                .add(ActivityDelegateType.PROGRESS_ACTIVITY, mProgressActivityDelegate)
+                .add(mErrorActivityDelegate)
+                .add(mProgressActivityDelegate)
                 .build()
     }
 

@@ -18,20 +18,12 @@ abstract class CompositeActivity(
         super.onCreate(savedInstanceState)
         setContentView(layoutResId)
         val delegatesHolder = createDelegatesHolder()
-        delegatesHolder.forEach {
-            it.onSetupView(this)
-        }
+        delegatesHolder.setup(this)
     }
 
     protected fun <TValue> LiveData<TValue>.observeWith(action: (TValue) -> Unit) {
         this.observe(this@CompositeActivity, Observer<TValue> {
             it?.apply(action)
-        })
-    }
-
-    protected fun <TValue> LiveData<TValue>.observeNullable(action: (TValue?) -> Unit) {
-        this.observe(this@CompositeActivity, Observer<TValue> {
-            action(it)
         })
     }
 
